@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">QR码收资</string>
+    <string name="scan_title">收资</string>
+    <string name="introduce">
+        本页面自动识别FIM端QR码，识别完成自动上传云端。
+    </string>
+    <string name="action_ScanQRCode">扫描二维码</string>
+    <string name="bgc">背景图片</string>
+    <string name="fans">风机图片</string>
+    <string name="company_introduce">公司简介</string>
+    <string name="collect_info">收资</string>
+    <string name="contact_us">联系我们</string>
+    <string name="company_info">公司简介</string>
+    <string name="company_logo">公司图标</string>
+    <string name="company_name">内蒙古东润能源科技有限公司</string>
+    <string name="company_recruit">"     展望未来，我们将不断超越和创新，勇创百年东润，为每一位东润人提供事业的舞台,我们竭诚欢迎各届精英加入东润能源，共创伟业！"</string>
+    <string name="company_culture">企业文化</string>
+    <string name="com_culture">"     厚德载物、共创共赢、创新进取、脚踏实地、亦是东润能源在追求成功路上时刻铭记的座右铭。东润能源文化之舟会承载东润人走的更高，更远！"</string>
+    <string name="map">分布地图</string>
+    <string name="company_strength">公司实力</string>
+    <string name="com_strength">"     公司拥有健全的信用及资质体系,54项知识产权及软件著作权,高新技术企业和双软认证企业,具有ISO9001质量认证、ISO14001环境质量认证、OHSAS18001职业健康安全管理体系认证。\n     信用企业认证:\n     公司在青岛设有自主研发中心、呼和浩特市研发中心资格认证、承装（修、试）电力设施许可四级证书电力工程施工总承包3级证书、风电场及光伏电站维护能力证书(鉴衡认证颁发)、新能源设备、材料供应商等相关行业证书。"</string>
+    <string name="scan_logo">扫码图标</string>
+    <string name="tip">温馨提示:</string>
+    <string name="tips">1.自动识别FIM端QR码，完成后自动上传云端。\n2.点击按钮开始扫码,将二维码放置扫码框正中央位置,
+        开始自动扫码。\n3.数据库文件记录在本地存储Android/data/cn.dongrun../files/目录中。</string>
+    <string name="attention_us">关注我们</string>
+    <string name="contact_me">联系开发者</string>
+    <string name="official_account">官方公众号</string>
+    <string name="developer_wechat">开发者微信</string>
+    <string name="farm_type_light">light</string>
+    <string name="farm_type_wind">wind</string>
+</resources>
