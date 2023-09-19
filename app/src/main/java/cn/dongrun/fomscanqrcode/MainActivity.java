@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private ExecutorService mExecutor;
     private LogBean logBean;
     private QrData qrData;
-    private String farmType;
+    private String farmType="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

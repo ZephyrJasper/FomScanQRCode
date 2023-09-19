@@ -257,7 +257,7 @@ public class FimDBOpenHelper extends SQLiteOpenHelper {
         String sqlstr =
                 "select count(1) from FIMTaskRunRecord where taskRunRecordID='" + taskRunRecordID + "'" + ";";
         Cursor cursor = db.rawQuery(sqlstr, null);
-        if (cursor.moveToFirst()) {
+        if (cursor.getCount() > 0 && cursor.moveToFirst()) {
             int count = cursor.getInt(0);
             if (count > 0) {
                 cursor.close();
@@ -271,9 +271,7 @@ public class FimDBOpenHelper extends SQLiteOpenHelper {
         values.put("checkTime", checkTime);
         values.put("result", result);
         values.put("memo", memo);
-        if (cursor != null) {
-            cursor.close();
-        }
+        cursor.close();
         return db.insert("FIMTaskRunRecord", null, values);
     }
 
@@ -284,7 +282,7 @@ public class FimDBOpenHelper extends SQLiteOpenHelper {
         String query = "select count(1) from FIMProcessCheckRecord where " +
                 "processCheckRecordID=" + processCheckRecordID;
         Cursor cursor = db.rawQuery(query, null);
-        if (cursor.moveToFirst()) {
+        if (cursor.getCount() > 0 && cursor.moveToFirst()) {
             int count = cursor.getInt(0);
             if (count > 0) {
                 cursor.close();
@@ -297,9 +295,7 @@ public class FimDBOpenHelper extends SQLiteOpenHelper {
         values.put("express", express);
         values.put("checkTime", checkTime);
         values.put("result", result);
-        if (cursor != null) {
-            cursor.close();
-        }
+        cursor.close();
         return db.insert("FIMProcessCheckRecord", null, values);
     }
 
@@ -311,7 +307,7 @@ public class FimDBOpenHelper extends SQLiteOpenHelper {
         String sqlStr = "select count(1) from FIMPerformanceRecord where " +
                 "performanceRecordID=" + performanceRecordID;
         Cursor cursor = db.rawQuery(sqlStr, null);
-        if (cursor.moveToFirst()) {
+        if (cursor.getCount() > 0 && cursor.moveToFirst()) {
             int count = cursor.getInt(0);
             if (count > 0) {
                 cursor.close();
@@ -324,9 +320,7 @@ public class FimDBOpenHelper extends SQLiteOpenHelper {
         values.put("checkTime", checkTime);
         values.put("result", result);
         values.put("memo", memo);
-        if (cursor != null) {
-            cursor.close();
-        }
+        cursor.close();
         return db.insert("FIMPerformanceRecord", null, values);
     }
 
@@ -341,7 +335,7 @@ public class FimDBOpenHelper extends SQLiteOpenHelper {
                 "group_id=?";
         String[] selectionArgs = {foca_time, group_id};
         Cursor cursor = db.rawQuery(query, selectionArgs);
-        if (cursor.moveToFirst()) {
+        if (cursor.getCount() > 0 && cursor.moveToFirst()) {
             int count = cursor.getInt(0);
             if (count > 0) {
                 cursor.close();
@@ -358,6 +352,7 @@ public class FimDBOpenHelper extends SQLiteOpenHelper {
         values.put("group_id", group_id);
         values.put("all_super_num", all_super_num);
         values.put("all_report_num", all_report_num);
+        cursor.close();
         return db.insert("WindPower", null, values);
     }
 
@@ -371,7 +366,7 @@ public class FimDBOpenHelper extends SQLiteOpenHelper {
         String sql =
                 "select count(1) from rpps_data_calstation_avg where ctime = '" + ctime + "' and layer = " + layer;
         Cursor cursor = db.rawQuery(sql, null);
-        if (cursor.moveToFirst()) {
+        if (cursor.getCount() > 0 && cursor.moveToFirst()) {
             int count = cursor.getInt(0);
             if (count > 0) {
                 cursor.close();
@@ -389,6 +384,7 @@ public class FimDBOpenHelper extends SQLiteOpenHelper {
         values.put("layer", layer);
         values.put("temperature", temperature);
         values.put("pressure", pressure);
+        cursor.close();
         return db.insert("rpps_data_calstation_avg", null, values);
     }
 
@@ -413,6 +409,7 @@ public class FimDBOpenHelper extends SQLiteOpenHelper {
         values.put("memo", memo);
         values.put("ttype", ttype);
         values.put("ctype", ctype);
+        cursor.close();
         return db.insert("rpps_data_report_ori", null, values);
     }
 
@@ -453,6 +450,7 @@ public class FimDBOpenHelper extends SQLiteOpenHelper {
         values.put("STATE_TYPE", STATE_TYPE);
         values.put("ERROR_REASON", ERROR_REASON);
         values.put("JFG_ERROR", JFG_ERROR);
+        cursor.close();
         return db.insert("LightPower", null, values);
     }
 
@@ -490,6 +488,7 @@ public class FimDBOpenHelper extends SQLiteOpenHelper {
         values.put("DIFFUSE_IRRAD", DIFFUSE_IRRAD);
         values.put("GROUP_ID", GROUP_ID);
         values.put("PRESSURE", PRESSURE);
+        cursor.close();
         return db.insert("SPPS_FZYI_MON_HIS", null, values);
     }
 
@@ -558,13 +557,8 @@ public class FimDBOpenHelper extends SQLiteOpenHelper {
         } else {
             sqlstr =
                     "insert into hostSetting(title,value) values('" + title + "','" + defaultValue + "');";
-            try {
-                db.execSQL(sqlstr);
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                db.close();
-            }
+            db.execSQL(sqlstr);
+            db.close();
             return defaultValue;
         }
     }
@@ -896,7 +890,7 @@ public class FimDBOpenHelper extends SQLiteOpenHelper {
     }
 
     public void uploadData() throws JSONException {
-        initSetting();
+//        initSetting();
         JSONObject data;
         String dataStr = getDataJson();
 //        System.out.println("请求的JsonData:" + dataStr);
@@ -1117,7 +1111,6 @@ public class FimDBOpenHelper extends SQLiteOpenHelper {
         db.execSQL(sqlstr);
         sqlstr = "delete from process";
         db.execSQL(sqlstr);
-        db.close();
     }
 
     public List<Object[]> queryData(Cursor cursor) {//
