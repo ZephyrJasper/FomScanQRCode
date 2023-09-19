@@ -49,7 +49,7 @@ public class FimDBOpenHelper extends SQLiteOpenHelper {
     static List<Map<String, String>> PSMServerList = new ArrayList<>();
     private String hostSN = "";
     private String farmName = "";
-    private String farmType;
+    private String farmType = "";
     private String settingTime = "";
 
     private int TRRUI = -1;
@@ -65,7 +65,7 @@ public class FimDBOpenHelper extends SQLiteOpenHelper {
     private int FIMMaxRPPSID = -1;
     private int FIMMaxORIID = -1;
     private int BASEUP = -1;
-    private int requestSuccessCnt=0;
+    private int requestSuccessCnt = 0;
 
     public FimDBOpenHelper(Context context) {
         super(context, getFilePath(context), null, DATABASE_VERSION);
@@ -77,6 +77,7 @@ public class FimDBOpenHelper extends SQLiteOpenHelper {
 //        System.out.println(filePath);
         return filePath;
     }
+
     public int getRequestSuccessCnt() {
         return requestSuccessCnt;
     }
@@ -84,6 +85,7 @@ public class FimDBOpenHelper extends SQLiteOpenHelper {
     public void setRequestSuccessCnt(int requestSuccessCnt) {
         this.requestSuccessCnt = requestSuccessCnt;
     }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         String FIMPerformanceRecord = "CREATE TABLE IF NOT EXISTS " +
@@ -257,7 +259,7 @@ public class FimDBOpenHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(sqlstr, null);
         if (cursor.moveToFirst()) {
             int count = cursor.getInt(0);
-            if(count>0){
+            if (count > 0) {
                 cursor.close();
                 return -1;
             }
@@ -284,7 +286,7 @@ public class FimDBOpenHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
             int count = cursor.getInt(0);
-            if(count>0){
+            if (count > 0) {
                 cursor.close();
                 return -1;
             }
@@ -311,7 +313,7 @@ public class FimDBOpenHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(sqlStr, null);
         if (cursor.moveToFirst()) {
             int count = cursor.getInt(0);
-            if(count>0){
+            if (count > 0) {
                 cursor.close();
                 return -1;
             }
@@ -341,7 +343,7 @@ public class FimDBOpenHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, selectionArgs);
         if (cursor.moveToFirst()) {
             int count = cursor.getInt(0);
-            if(count>0){
+            if (count > 0) {
                 cursor.close();
                 return -1;
             }
@@ -371,7 +373,7 @@ public class FimDBOpenHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(sql, null);
         if (cursor.moveToFirst()) {
             int count = cursor.getInt(0);
-            if(count>0){
+            if (count > 0) {
                 cursor.close();
                 return -1;
             }
@@ -399,7 +401,7 @@ public class FimDBOpenHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(sql, args);
         if (cursor.getCount() > 0 && cursor.moveToFirst()) {
             int count = cursor.getInt(0);
-            if(count>0){
+            if (count > 0) {
                 cursor.close();
                 return -1;
             }
@@ -429,7 +431,7 @@ public class FimDBOpenHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(sql, args);
         if (cursor.moveToFirst()) {
             int count = cursor.getInt(0);
-            if(count>0){
+            if (count > 0) {
                 cursor.close();
 //                System.out.println("addNewLightPower数据重复");
                 return -1;
@@ -463,11 +465,12 @@ public class FimDBOpenHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         String sql = "select count(1) from SPPS_FZYI_MON_HIS where COLLECTION_DATE = " +
                 "? and COLLECTION_TIME = ? and GROUP_ID = ? and STOREY_H = ?";
-        String[] args = {COLLECTION_DATE, COLLECTION_TIME, GROUP_ID, String.valueOf(STOREY_H)};
+        String[] args = {COLLECTION_DATE, COLLECTION_TIME, GROUP_ID,
+                String.valueOf(STOREY_H)};
         Cursor cursor = db.rawQuery(sql, args);
         if (cursor.moveToFirst()) {
             int count = cursor.getInt(0);
-            if(count>0){
+            if (count > 0) {
 //                System.out.println("addNewSPPS_FZYI_MON_HIS数据重复");
                 cursor.close();
                 return -1;
@@ -565,15 +568,17 @@ public class FimDBOpenHelper extends SQLiteOpenHelper {
             return defaultValue;
         }
     }
+
     //返回值如何处理
     public void saveHostSetting(String title, String value) {//保存更新的上传标志
         SQLiteDatabase db = getWritableDatabase();
         String sqlstr = "select count(1) from hostSetting where title='" + title + "'";
-        Cursor cursor = db.rawQuery(sqlstr,null);
+        Cursor cursor = db.rawQuery(sqlstr, null);
         if (cursor.moveToFirst()) {
             int count = cursor.getInt(0);
             if (count > 0) {
-                sqlstr = "update hostSetting set value='" + value + "' where title='" + title + "'";
+                sqlstr =
+                        "update hostSetting set value='" + value + "' where title='" + title + "'";
                 db.execSQL(sqlstr);
             } else {
                 readHostSetting(title, value);
@@ -584,7 +589,8 @@ public class FimDBOpenHelper extends SQLiteOpenHelper {
 
     public String getMEID(Context context) {
         // 获取设备信息
-        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        TelephonyManager telephonyManager =
+                (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         @SuppressLint("HardwareIds") String deviceMEID = telephonyManager.getDeviceId();
         // 使用设备MEID
         return deviceMEID;
@@ -665,6 +671,7 @@ public class FimDBOpenHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(sqlstr, null);
         return queryData(cursor);
     }
+
     //
     public List<Object[]> readFIMLightPower() {
         SQLiteDatabase db = getReadableDatabase();
@@ -697,7 +704,6 @@ public class FimDBOpenHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(sqlstr, null);
         return queryData(cursor);
     }
-
 
 
     // 读取FIMWindPower数据
@@ -825,11 +831,12 @@ public class FimDBOpenHelper extends SQLiteOpenHelper {
             db.close();
         }
     }
+
     //读库拼请求JSON
     public String getDataJson() throws JSONException {
         initSetting();
         JSONObject jsonData = new JSONObject();
-        if (Integer.parseInt(farmType) == 1) {
+        if (farmType.equals("1")) {
             JSONArray nullArray = new JSONArray("[]");
             jsonData.put("data", new JSONObject()
                     .put("hostSN", hostSN)
@@ -855,7 +862,7 @@ public class FimDBOpenHelper extends SQLiteOpenHelper {
                                     new JSONArray(readFIMSPPS_FZYI_MON_HIS()))
                     )
             );
-        } else if (Integer.parseInt(farmType) == 2) {
+        } else if (farmType.equals("2")) {
             JSONArray nullArray = new JSONArray("[]");
             jsonData.put("data", new JSONObject()
                     .put("hostSN", hostSN)
@@ -914,9 +921,11 @@ public class FimDBOpenHelper extends SQLiteOpenHelper {
                             public void checkClientTrusted(X509Certificate[] chain,
                                                            String authType) {
                             }
+
                             public void checkServerTrusted(X509Certificate[] chain,
                                                            String authType) {
                             }
+
                             public X509Certificate[] getAcceptedIssuers() {
                                 return new X509Certificate[0];
                             }
@@ -965,7 +974,7 @@ public class FimDBOpenHelper extends SQLiteOpenHelper {
                             }*/
                             int psmMaster = jsonResult.optInt("psm_master");
                             if (psmMaster == 1) {
-                               requestSuccessCnt++;
+                                requestSuccessCnt++;
                                 data = jsonResult;
                                 saveData(data);
                             }
@@ -1017,7 +1026,8 @@ public class FimDBOpenHelper extends SQLiteOpenHelper {
             e.printStackTrace();
         }
     }
-    public void setFarmType(String farmType){//根据扫码来获取的FarmType
+
+    public void setFarmType(String farmType) {//根据扫码来获取的FarmType
         this.farmType = farmType;
     }
 
